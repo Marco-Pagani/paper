@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+variable "SUPABASE_ACCESS_TOKEN" {
+  sensitive = true
+}
+
 provider "supabase" {
-  access_token = file("${path.cwd}/access-token")
+  access_token = var.SUPABASE_ACCESS_TOKEN
 }
