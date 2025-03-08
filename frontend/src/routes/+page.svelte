@@ -15,11 +15,6 @@
 			return;
 		}
 
-		if (!sender.trim()) {
-			errorMsg = 'Sender cannot be empty!';
-			return;
-		}
-
 		const { error } = await supabase.from('messages').insert([
 			{ content: message.trim(), sender: sender.trim() } // 'status' is optional, defaults to 'pending'
 		]);
@@ -51,6 +46,7 @@
         Write your message
         </label>
 			<textarea
+        bind:value={message}
 				id="message-input"
 				class="h-24 w-full resize-none rounded-lg border-gray-300 focus:border-amber-800"
 				maxlength="120"
@@ -62,7 +58,7 @@
 				<label class="block pb-2 text-sm font-semibold text-amber-900" for="sender-input">
           Who sent it?
         </label>
-				<input class="rounded-lg border-gray-300 focus:border-amber-800 w-full xs:w-auto" id="sender-input" />
+				<input bind:value={sender}  class="rounded-lg border-gray-300 focus:border-amber-800 w-full xs:w-auto" id="sender-input" />
 			</div>
 
 			<button type="submit" class="self-end rounded bg-amber-900 p-3 font-bold text-white hover:bg-amber-950 w-full xs:w-auto">
