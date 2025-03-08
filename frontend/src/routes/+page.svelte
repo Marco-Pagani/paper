@@ -1,7 +1,15 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
+  import MessageTicker from '$lib/message-ticker.svelte';
+
+  type Message = {
+    content: string;
+    sender: string;
+  }
 
 let print = false;
+
+const submittedMessages: Message[] = $state([])
 
 	let message = '';
 	let sender = '';
@@ -10,25 +18,22 @@ let print = false;
 
   let receipt = '';
   
-  let paperHolder: HTMLDivElement;
-  let paperContent: HTMLDivElement;
 
 	async function submitMessage() {
-    print = true;
-    receipt = message
-		success = false;
-		errorMsg = '';
 
-		if (!message.trim()) {
-			errorMsg = 'Message cannot be empty!';
-			return;
-		}
+    submittedMessages.unshift({content: message, sender: sender})
 
-    requestAnimationFrame(() => {
-      if (paperHolder) {
-        paperHolder.style.maxHeight = `${paperContent.clientHeight}px`;
-      }
-    });
+    // print = true;
+    // receipt = message
+		// success = false;
+		// errorMsg = '';
+
+		// if (!message.trim()) {
+		// 	errorMsg = 'Message cannot be empty!';
+		// 	return;
+		// }
+
+  
 
 		// const { error } = await supabase.from('messages').insert([
 		// 	{ content: message.trim(), sender: sender.trim() } // 'status' is optional, defaults to 'pending'
@@ -82,13 +87,7 @@ let print = false;
 		</div>
 
 
-    <div class="h-24 slot mt-24" />
-    <div class="relative bg-gray-600 h-2 border-gray-500 border-y -mt-13 mx-4 mb-24">
-      <div id="paper-holder" bind:this={paperHolder} class="{print ? 'print' : ''}">
-        <div id="paper" bind:this={paperContent} class="font-receipt text-black" >{receipt}</div>
-      </div>
-    </div>
-
+    <MessageTicker messages={submittedMessages} />
     
 
 		{#if success}
@@ -101,48 +100,5 @@ let print = false;
 </div>
 
 <style lang="css">
-	@import url('https://fonts.cdnfonts.com/css/merchant-copy-doublesize');
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-	.font-receipt {
-		font-family: 'Merchant Copy Doublesize', sans-serif;
-	}
-  .font-sans {
-    font-family: "IBM Plex Sans", sans-serif;
-    font-optical-sizing: auto;
-  }
-  .slot {
-    --box-shadow-settings: -8px -8px 12px rgba(255,255,255,0.3), 8px 8px 12px rgba(30, 31, 32, 0.897);
-    position: relative;
-    background-color: rgba(0,0,0,0.3);
-    border: .3rem solid rgb(90, 90, 90);
-    border-radius: .6rem/.6rem;
-    box-shadow: var(--box-shadow-settings);
-  }
-  .slot::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: .4rem/.4rem;
-    box-shadow: inset var(--box-shadow-settings);
-  }
 
-  #paper-holder {
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    top: 3px;
-    left: 0;
-    right: 0;
-    max-height: 0; /* Start with zero height */
-    transition:max-height 2s steps(15,end);
-  }
-#paper {
-    width: 350px;
-    margin: 0 auto; /* Center the content */
-    height: auto; /* Set height to auto */
-    line-height: 30px;
-    text-align: center;
-    background-color: white;
-  }
 </style>

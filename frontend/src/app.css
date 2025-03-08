@@ -1,6 +1,16 @@
+@import url('https://fonts.cdnfonts.com/css/merchant-copy-doublesize');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 
 @theme {
 	--breakpoint-xs: 32rem;
+}
+
+.font-receipt {
+	font-family: 'Merchant Copy Doublesize', sans-serif;
+}
+.font-sans {
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-optical-sizing: auto;
 }
