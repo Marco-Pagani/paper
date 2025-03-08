@@ -63,7 +63,7 @@ let print = false;
 			<textarea
         bind:value={message}
 				id="message-input"
-				class="h-24 w-full resize-none rounded-lg border-gray-300 focus:border-amber-800"
+				class="h-24 w-full resize-none rounded-lg border-gray-300 focus:border-amber-800 text-black"
 				maxlength="120"
 				required
 			/>
@@ -73,7 +73,7 @@ let print = false;
 				<label class="block pb-2 text-sm font-semibold " for="sender-input">
           Who sent it?
         </label>
-				<input bind:value={sender}  class="rounded-lg border-gray-300 focus:border-amber-800 w-full xs:w-auto" id="sender-input" />
+				<input bind:value={sender}  class="rounded-lg border-gray-300 focus:border-amber-800 w-full xs:w-auto text-black" id="sender-input" />
 			</div>
 
 			<button type="submit" class="self-end rounded bg-amber-900 p-3 font-bold text-white hover:bg-amber-950 w-full xs:w-auto">
