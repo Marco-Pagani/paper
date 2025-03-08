@@ -9,15 +9,18 @@
 
 let print = false;
 
-const submittedMessages: Message[] = $state([])
+const submittedMessages: (Message | boolean)[] = $state([])
 
-	let message = '';
-	let sender = '';
+	let message = $state('');
+	let sender = $state('');
+
+
 	let success = false;
 	let errorMsg = '';
 
-  let receipt = '';
-  
+  function feed() {
+    submittedMessages.unshift(false)
+  }
 
 	async function submitMessage() {
 
@@ -49,15 +52,14 @@ const submittedMessages: Message[] = $state([])
 	}
 </script>
 
-<div class="flex h-full flex-col items-center p-6 font-sans">
-	<!-- <div class="bg-linear-to-b from-[#72767a] via-[#424252] to-[#465069] border-gray-700 border-4 p-6 rounded-md w-full flex flex-col items-center"> -->
+<div class="flex h-full flex-col items-center p-6 font-sans min-w-[556px]">
 
   <div class="bg-white  p-6  flex flex-col items-center text-gray-800 font-receipt -rotate-3 my-8 drop-shadow-md">
     <h1 class="text-3xl pb-2 ">paper.pagani.io</h1>
     <p class="">A silly “fax machine” just for me</p>
     </div>
 
-	<form on:submit|preventDefault={submitMessage} class="w-full max-w-xl border-gray-900 rounded-lg border-4 p-10 bg-gray-800 text-amber-100">
+	<form onsubmit={submitMessage} class="w-full max-w-xl border-black rounded-lg border-6 p-10 bg-gray-800 text-amber-100">
     <p class="pt-4 pb-8 ">If you send me a message it will appear in my house. So be nice.<br>Also, paper costs money so keep it short, thanks.</p>
 		<div class="w-full pb-6">
 			<label
@@ -71,9 +73,9 @@ const submittedMessages: Message[] = $state([])
 				class="h-24 w-full resize-none rounded-lg border-gray-300 focus:border-amber-800 text-black"
 				maxlength="120"
 				required
-			/>
+			></textarea>
 		</div>
-		<div class="flex justify-between flex-col xs:flex-row gap-6 ">
+		<div class="flex justify-between gap-6 ">
 			<div class="self-start w-full xs:w-auto">
 				<label class="block pb-2 text-sm font-semibold " for="sender-input">
           Who sent it?
@@ -85,10 +87,19 @@ const submittedMessages: Message[] = $state([])
         Print Message
         </button>
 		</div>
-
-
+ 
+    <div class="flex mt-12" >
+      <div role="presentation" class="-ml-10 mr-10 bg-black rounded-r-xl border-2 border-gray-900 p-5 font-semibold flex flex-col gap-2 items-center border-l-0">
+        <div class="w-5 h-5 bg-blue-900 rounded-full flex items-center justify-center text-white"></div>
+        <p>POWER</p>
+        <div class="w-5 h-5 bg-gray-900 rounded-full flex items-center justify-center text-white"></div>
+        <p>ERROR</p>
+        <div class="w-5 h-5 bg-green-900 rounded-full flex items-center justify-center text-white"></div>
+        <p>PAPER</p>
+        <button type="button" onclick={feed} class="w-18 h-12 hover:bg-gray-600 rounded-lg text-black bg-gray-400">FEED</button>
+      </div>
     <MessageTicker messages={submittedMessages} />
-    
+    </div>
 
 		{#if success}
 			<p class="success">Message sent successfully!</p>

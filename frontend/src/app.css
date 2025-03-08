@@ -3,10 +3,6 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 
-@theme {
-	--breakpoint-xs: 32rem;
-}
-
 .font-receipt {
 	font-family: 'Merchant Copy Doublesize', sans-serif;
 }

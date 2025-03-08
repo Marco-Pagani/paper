@@ -9,25 +9,32 @@
     messages.length
     requestAnimationFrame(() => {
       if (paperHolder) {
-        paperHolder.style.maxHeight = `${paperContent.clientHeight}px`;
+        paperHolder.style.maxHeight = `${paperContent.clientHeight + 15}px`;
       }
     });
   })
 
 </script>
-
-<div class="h-24 slot mt-24"></div>
+<div>
+<div class="h-24 slot mt-18"></div>
 <div class="relative bg-gray-600 h-2 border-gray-500 border-y -mt-13 mx-4 mb-24">
   <div id="paper-holder" bind:this={paperHolder}>
-    <div id="paper" bind:this={paperContent} class="font-receipt text-black" >
+    <div id="paper" bind:this={paperContent} >
       {#each messages as message}
-        <div class="p-4 border-b border-gray-500">
+      {#if message}
+        <div class="p-4 font-receipt text-black text-sm text-left flex flex-col gap-2">
+          <p>Message sent!
+          <p >From {message.sender || 'Anonymous'} @ {(new Date()).toLocaleDateString()}</p>
           <p>{message.content}</p>
-          <p class="text-sm text-gray-500">{message.sender}</p>
+          <p>--------------------------------</p>
         </div>
+        {:else}
+<div class="h-24"></div>
+        {/if}
       {/each}
     </div>
   </div>
+</div>
 </div>
 
 <style lang="css">
@@ -57,7 +64,8 @@
     left: 0;
     right: 0;
     max-height: 0; /* Start with zero height */
-    transition:max-height 2s steps(15,end);
+    transition:max-height 2s steps(20,end);
+    padding-bottom: 15px;
   }
 #paper {
     width: 350px;
@@ -66,5 +74,6 @@
     line-height: 30px;
     text-align: center;
     background-color: white;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.5), inset 0px 5px 12px -5px rgba(0,0,0,0.5);
   }
 </style>
