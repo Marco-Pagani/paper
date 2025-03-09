@@ -41,9 +41,12 @@ def print_message(message):
         .astimezone(ZoneInfo("America/New_York"))
         .strftime("%B %d, %Y @ %I:%M %p")
     )
-    printer.textln(f"Sent by {message['sender']} on {send_date_time}")
+    printer.textln(f"Message from {message['sender']}")
+    printer.textln(send_date_time)
+    printer.ln()
     printer.textln(message["content"])
     printer.textln("------------------------------------------------")
+    printer.ln(3)
     # mark_as_printed(message["id"])
     return
 
