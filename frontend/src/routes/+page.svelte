@@ -5,40 +5,39 @@
 	type Message = {
 		content: string;
 		sender: string;
+		date: Date
 	};
 
 
 	const submittedMessages: (Message | boolean)[] = $state([]);
 
-	let message = $state('');
-	let sender = $state('');
-	let errorMsg = $state('');
+	let messageContent = $state('');
+	let messageSender = $state('');
 
+	let errorMsg = $state('');
 
 	function feed() {
 		submittedMessages.unshift(false);
 	}
 
 	async function submitMessage() {
-		
-
 		errorMsg = '';
 
-		if (!message.trim()) {
+		if (!messageContent.trim()) {
 			errorMsg = 'Message cannot be empty!';
 			return;
 		}
 
-		const { data, error } = await supabase.from('messages').insert([
-			{ content: message.trim(), sender: sender.trim() } 
-		]).select()
+		const { error } = await supabase.from('messages').insert([
+			{ content: messageContent.trim(), sender: messageSender.trim() } 
+		])
 
 		if (error) {
 			errorMsg = `Error: ${error.message}`
 		} else {
-			message = ''
-			sender = ''
-			submittedMessages.unshift(data as unknown as Message); // TODO
+			submittedMessages.unshift({content: messageContent, sender: messageSender, date: new Date()});
+			messageContent = ''
+			messageSender = ''
 		}
 	}
 </script>
@@ -68,7 +67,7 @@
 				Write your message
 			</label>
 			<textarea
-				bind:value={message}
+				bind:value={messageContent}
 				id="message-input"
 				class="h-24 w-full resize-none rounded-lg border-gray-300 text-black focus:border-amber-800"
 				maxlength="120"
@@ -79,7 +78,7 @@
 			<div class="xs:w-auto w-full self-start">
 				<label class="block pb-2 text-sm font-semibold" for="sender-input"> Who sent it? </label>
 				<input
-					bind:value={sender}
+					bind:value={messageSender}
 					class="xs:w-auto w-full rounded-lg border-gray-300 text-black focus:border-amber-800"
 					id="sender-input"
 				/>
@@ -103,7 +102,7 @@
 				></div>
 				<p>POWER</p>
 				<div
-					class="flex h-4 w-4 items-center justify-center rounded-full bg-gray-900 text-white"
+					class="flex h-4 w-4 items-center justify-center rounded-full {errorMsg ? 'bg-red-800' : 'bg-gray-900'} text-white"
 				></div>
 				<p>ERROR</p>
 				<div
