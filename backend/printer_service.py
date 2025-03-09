@@ -18,10 +18,16 @@ printer = Usb(
 
 
 def process_pending_messages():
-    response = supabase.from_("messages").select("*").eq("status", "pending").execute()
-    if response.data:
-        for message in response.data:
-            print_message(message)
+    try:
+        response = (
+            supabase.from_("messages").select("*").eq("status", "pending").execute()
+        )
+        if response.data:
+            for message in response.data:
+                print_message(message)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
 
 
 # TODO: This requires the async client which is undocumented
