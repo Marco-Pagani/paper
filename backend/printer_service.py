@@ -1,12 +1,19 @@
 import os
 import time
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from escpos.printer import Usb
 
 load_dotenv(dotenv_path=".env")
+
 supabase: Client = create_client(
     os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+)
+
+printer = Usb(
+    idVendor=0x0FE6, idProduct=0x811E, in_ep=0x81, out_ep=0x03, profile="RP326"
 )
 
 
@@ -29,8 +36,14 @@ def listen_for_messages():
 
 
 def print_message(message):
-    print(f"Printing message: {message}")
-    # TODO: printer code here
+    send_date_time = (
+        datetime.fromisoformat(message["created_at"])
+        .astimezone(ZoneInfo("America/New_York"))
+        .strftime("%B %d, %Y @ %I:%M %p")
+    )
+    printer.textln(f"Sent by {message['sender']} on {send_date_time}")
+    printer.textln(message["content"])
+    printer.textln("------------------------------------------------")
     # mark_as_printed(message["id"])
     return
 
@@ -42,12 +55,7 @@ def mark_as_printed(message_id):
 
 
 def main():
-
-    p = Usb(0x04B8, 0x0202, 0, profile="RP326")
-    p.text("Hello World\n")
-    p.image("logo.gif")
-    p.barcode("4006381333931", "EAN13", 64, 2, "", "")
-    p.cut()
+    process_pending_messages()
 
     # while True:
     #     process_pending_messages()
