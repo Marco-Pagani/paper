@@ -14,18 +14,18 @@
 	});
 </script>
 
-<div class="w-full">
+<div class="w-full max-w-[400px] mx-auto">
 	<div class="slot sm:mt-16 h-24"></div>
 	<div class="relative mx-4 -mt-13 mb-24 h-2 rounded border-y-2 border-gray-500 bg-gray-600">
 		<div id="paper-holder" bind:this={paperHolder}>
 			<div id="paper" bind:this={paperContent}>
 				{#each messages as message}
 					{#if message}
-						<div class="font-receipt flex flex-col gap-2 p-4 text-left text-sm text-black">
+						<div class="font-receipt flex flex-col m-4 text-left text-xl text-black overflow-hidden">
 							<p>Message sent!</p>
 							<p>From {message.sender || 'Anonymous'} @ {new Date().toLocaleTimeString()}</p>
 							<p>{message.content}</p>
-							<p>--------------------------------</p>
+							<p>--------------------------------------------</p>
 						</div>
 					{:else}
 						<div class="h-24"></div>

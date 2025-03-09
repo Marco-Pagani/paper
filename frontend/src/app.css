@@ -3,8 +3,11 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 
-.font-receipt {
+.font-receipt-xl {
 	font-family: 'Merchant Copy Doublesize', sans-serif;
+}
+.font-receipt {
+	font-family: 'Merchant Copy', sans-serif;
 }
 .font-sans {
 	font-family: 'IBM Plex Sans', sans-serif;

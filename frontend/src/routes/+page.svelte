@@ -50,7 +50,7 @@
 
 <div class="flex h-full  flex-col items-center p-2 sm:p-6 font-sans">
 	<div
-		class="font-receipt mt-8 mb-14 flex -rotate-3 flex-col items-center bg-white p-6 text-gray-800 drop-shadow-md"
+		class="font-receipt-xl mt-8 mb-14 flex -rotate-3 flex-col items-center bg-white p-6 text-gray-800 drop-shadow-md"
 	>
 		<h1 class="pb-2 text-3xl">paper.pagani.io</h1>
 		<p class="">A silly “fax machine” just for me</p>
