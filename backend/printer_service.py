@@ -45,9 +45,10 @@ def print_message(message):
     printer.textln(send_date_time)
     printer.ln()
     printer.textln(message["content"])
+    printer.ln()
     printer.textln("------------------------------------------------")
-    printer.ln(3)
-    # mark_as_printed(message["id"])
+    printer.ln()
+    mark_as_printed(message["id"])
     return
 
 
@@ -58,11 +59,9 @@ def mark_as_printed(message_id):
 
 
 def main():
-    process_pending_messages()
-
-    # while True:
-    #     process_pending_messages()
-    #     time.sleep(10)
+    while True:
+        process_pending_messages()
+        time.sleep(15)
     # listen_for_messages()
 
 
