@@ -1,38 +1,41 @@
-from supabase import create_client, Client
+import os
 import time
 from dotenv import load_dotenv
-import os
+from supabase import create_client, Client
 
-# Load environment variables from .env file
 load_dotenv(dotenv_path="../.env")
-
-# Supabase credentials
 SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
-def fetch_messages():
-    """Fetch unprinted messages from Supabase."""
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+
+def process_pending_messages():
     response = supabase.from_("messages").select(
         "*").eq("status", "pending").execute()
-    return response.data if response.data else []
+    if response.data:
+        for message in response.data:
+            print_message(message)
+
+def listen_for_messages():
+    response = (
+    supabase.channel("new_messages")
+    .on_postgres_changes("INSERT", schema="public", table="messages", callback=print_message)
+    .subscribe()
+)
+
+def print_message(message):
+    print(f"Printing message: {message}")
+    # TODO: printer code here
+    # mark_as_printed(message["id"])
+    return
 
 def mark_as_printed(message_id):
-    """Update message status to 'printed'."""
-    supabase.from_("messages").update(
-        {"status": "printed"}).eq("id", message_id).execute()
+    supabase.from_("messages").update({"status": "printed"}).eq("id", message_id).execute()
+    
 
 def main():
-    while True:
-        messages = fetch_messages()
-        if messages:
-            for message in messages:
-                # print_message(message["content"])
-                mark_as_printed(message["id"])  # Mark message as printed
-                print(message)
-        else:
-            print("No messages to print")
-        time.sleep(10)  # Poll every 10 seconds
+   process_pending_messages()
+   listen_for_messages()
 
 if __name__ == "__main__":
     main()

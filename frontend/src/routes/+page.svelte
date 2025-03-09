@@ -7,44 +7,39 @@
 		sender: string;
 	};
 
-	let print = false;
 
 	const submittedMessages: (Message | boolean)[] = $state([]);
 
 	let message = $state('');
 	let sender = $state('');
+	let errorMsg = $state('');
 
-	let success = false;
-	let errorMsg = '';
 
 	function feed() {
 		submittedMessages.unshift(false);
 	}
 
 	async function submitMessage() {
-		submittedMessages.unshift({ content: message, sender: sender });
+		
 
-		// print = true;
-		// receipt = message
-		// success = false;
-		// errorMsg = '';
+		errorMsg = '';
 
-		// if (!message.trim()) {
-		// 	errorMsg = 'Message cannot be empty!';
-		// 	return;
-		// }
+		if (!message.trim()) {
+			errorMsg = 'Message cannot be empty!';
+			return;
+		}
 
-		// const { error } = await supabase.from('messages').insert([
-		// 	{ content: message.trim(), sender: sender.trim() } // 'status' is optional, defaults to 'pending'
-		// ]);
+		const { data, error } = await supabase.from('messages').insert([
+			{ content: message.trim(), sender: sender.trim() } 
+		]).select()
 
-		// if (error) {
-		// 	errorMsg = `Error: ${error.message}`;
-		// } else {
-		// 	success = true;
-		// 	message = ''; // Clear input after success
-		// 	sender = ''; // Clear input after success
-		// }
+		if (error) {
+			errorMsg = `Error: ${error.message}`
+		} else {
+			message = ''
+			sender = ''
+			submittedMessages.unshift(data as unknown as Message); // TODO
+		}
 	}
 </script>
 
@@ -64,6 +59,7 @@
 			If you send me a message it will appear in my house. So be nice.<br />Also, paper costs money
 			so keep it short, thanks.
 		</p>
+		<p>{errorMsg}</p>
 		<div class="w-full pb-6">
 			<label
 				class="block pb-2 text-sm font-semibold after:text-red-700 after:content-['*']"
