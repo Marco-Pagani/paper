@@ -1,0 +1,17 @@
+{
+  "name": "paper-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@point-of-sale/receipt-printer-encoder": "^3.0.2",
+    "@point-of-sale/system-receipt-printer": "^2.0.1",
+    "canvas": "^3.1.0"
+  }
+}
