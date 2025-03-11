@@ -107,14 +107,14 @@
 		<div class="mt-10 flex flex-col sm:flex-row gap-10">
 			<div
 				role="presentation"
-				class=" -ml-10 flex sm:flex-col  self-start items-center justify-center gap-2 rounded-r-xl border-2 border-l-0 border-gray-900 bg-black p-4 font-semibold text-xs"
+				class=" -ml-10 flex sm:flex-col  self-start items-center justify-center gap-2 rounded-r-xl border-3 border-l-0 border-slate-800 bg-slate-950 p-4 font-semibold text-xs text-slate-50"
 			>
 				<div
 					class="flex h-4 w-4 items-center justify-center rounded-full bg-blue-900"
 				></div>
 				<p>POWER</p>
 				<div
-					class="flex h-4 w-4 items-center justify-center rounded-full {errorMsg ? 'bg-red-800' : 'bg-gray-900'} "
+					class="flex h-4 w-4 items-center justify-center rounded-full {errorMsg ? 'bg-red-800' : 'bg-slate-800'} "
 				></div>
 				<p>ERROR</p>
 				<div
@@ -124,7 +124,7 @@
 				<button
 					type="button"
 					onclick={feed}
-					class="h-10 w-14 rounded-lg bg-gray-400 text-black hover:bg-gray-600 text-sm cursor-pointer">FEED</button
+					class="h-10 w-14 rounded-lg bg-slate-300 text-slate-950 hover:bg-slate-500 text-sm cursor-pointer">FEED</button
 				>
 			</div>
 			<MessageTicker messages={submittedMessages} />
