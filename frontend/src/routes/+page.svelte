@@ -49,13 +49,13 @@
 <div class="flex h-full  flex-col items-center p-2 sm:p-6 font-sans">
 
 	<div
-		class="font-receipt-xl my-8 flex -rotate-3 flex-col items-center bg-white p-6 text-gray-800 drop-shadow-md"
+		class="font-receipt-xl mt-6 flex -rotate-3 flex-col items-center bg-white p-6 text-gray-800 drop-shadow-md"
 	>
 		<h1 class="pb-2 text-3xl">paper.pagani.io</h1>
 		<p class="">A silly “fax machine” just for me</p>
 	</div>
 
-	<section class="max-w-98 my-8 p-4 border-l-3 border-amber-500 pl-3 leading-[1.3] bg-amber-50 text-amber-950 z-10">
+	<section class="max-w-125 my-10  border-l-4 border-amber-500 pl-3 leading-[1.3] text-xl text-amber-950 z-10">
 		<p>
 			I bought a receipt printer. You can send me messages and I'll print them out and put them on my wall. It's a bit like a fax machine, but slower and more expensive.
 		</p>
