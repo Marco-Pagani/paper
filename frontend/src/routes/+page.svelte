@@ -50,18 +50,18 @@
 		<p class="">A silly “fax machine” just for me</p>
 	</div>
 
+	<p class="pt-4 pb-8">
+		If you send me a message it will appear in my house. So be nice.<br />Also, paper costs money
+		so keep it short, thanks.
+	</p>
 	<form
 		onsubmit={submitMessage}
-		class="w-full max-w-xl rounded-lg border-6 border-black bg-gray-800 p-10 text-amber-100"
+		class="w-full max-w-xl rounded-lg border-6 border-slate-800 bg-slate-900 p-10 text-slate-100 "
 	>
-		<p class="pt-4 pb-8">
-			If you send me a message it will appear in my house. So be nice.<br />Also, paper costs money
-			so keep it short, thanks.
-		</p>
 		<p>{errorMsg}</p>
 		<div class="w-full pb-6">
 			<label
-				class="block pb-2 text-sm font-semibold after:text-red-700 after:content-['*']"
+				class="block pb-2 text-sm font-semibold after:text-red-600 after:content-['*']"
 				for="message-input"
 			>
 				Write your message
@@ -69,24 +69,25 @@
 			<textarea
 				bind:value={messageContent}
 				id="message-input"
-				class="h-24 w-full resize-none rounded-lg border-gray-300 text-black focus:border-amber-800"
-				maxlength="120"
+				class="h-24 w-full resize-none rounded-lg bg-slate-800 border-none shadow-md shadow-slate-950"
+				maxlength="144"
 				required
 			></textarea>
 		</div>
-		<div class="flex flex-col sm:flex-row justify-between gap-6 items-baseline">
+		<div class="flex flex-col sm:flex-row justify-between gap-8 items-baseline">
 			<div class="xs:w-auto w-full self-start">
 				<label class="block pb-2 text-sm font-semibold" for="sender-input"> Who sent it? </label>
 				<input
+				maxlength="12"
 					bind:value={messageSender}
-					class="xs:w-auto w-full rounded-lg border-gray-300 text-black focus:border-amber-800"
+					class="xs:w-auto w-full rounded-lg bg-slate-800 h-12 border-none shadow-md shadow-slate-950"
 					id="sender-input"
 				/>
 			</div>
 
 			<button
 				type="submit"
-				class="xs:w-auto w-full self-end rounded-lg border-amber-900 border-4 p-3 font-bold text-white hover:bg-amber-950"
+				class="xs:w-auto w-full self-end rounded-lg bg-slate-600 text-slate-100 border-0 border-slate-700 hover:bg-slate-800 p-3 font-semibold shadow-md shadow-slate-950"
 			>
 				Print Message
 			</button>
