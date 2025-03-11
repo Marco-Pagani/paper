@@ -16,19 +16,24 @@
 
 <div class="w-full max-w-[400px] mx-auto">
 	<div class="slot sm:mt-16 h-24"></div>
-	<div class="relative mx-4 -mt-13 mb-24 h-2 rounded border-y-2 border-gray-500 bg-gray-600">
+	<div class="relative mx-4 -mt-13 mb-24 h-2 rounded border-y-2 border-slate-500 bg-slate-600">
 		<div id="paper-holder" bind:this={paperHolder}>
 			<div id="paper" bind:this={paperContent}>
 				{#each messages as message}
 					{#if message}
-						<div class="font-receipt flex flex-col m-4 text-left text-xl text-black overflow-hidden">
-							<p>Message sent!</p>
-							<p>From {message.sender || 'Anonymous'} @ {new Date().toLocaleTimeString()}</p>
-							<p>{message.content}</p>
-							<p>--------------------------------------------</p>
+						<div class="font-receipt m-4 text-left text-xl text-black overflow-hidden leading-4">
+							{#if message.error}
+								<p class="text-red-900 py-2">Error: {message.error}</p>
+							{:else}
+								<p class="text-emerald-900 pb-1">Success!</p>
+								<p>Message from {message.sender || 'Anonymous'} </p>
+								<p>Sent @ {new Date().toLocaleTimeString()}</p>
+								<p class="py-2">{message.content}</p>
+								{/if}
+								<p>--------------------------------------------</p>
 						</div>
 					{:else}
-						<div class="h-24"></div>
+						<div class="h-24" role="presentation"></div>
 					{/if}
 				{/each}
 			</div>
@@ -40,10 +45,10 @@
 	.slot {
 		width: 100%;
 		--box-shadow-settings:
-			-8px -8px 12px rgba(255, 255, 255, 0.3), 8px 8px 12px rgba(30, 31, 32, 0.897);
+			-8px -8px 12px oklch(0.279 0.041 260.031), 8px 8px 12px oklch(0.129 0.042 264.695);
 		position: relative;
 		background-color: rgba(0, 0, 0, 0.3);
-		border: 0.3rem solid rgb(90, 90, 90);
+		border: 0.3rem solid oklch(0.208 0.042 265.755);
 		border-radius: 0.6rem/.6rem;
 		box-shadow: var(--box-shadow-settings);
 	}

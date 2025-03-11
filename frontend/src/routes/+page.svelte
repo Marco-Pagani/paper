@@ -2,11 +2,13 @@
 	import { supabase } from '$lib/supabase';
 	import MessageTicker from '$lib/message-ticker.svelte';
 
-	type Message = {
+	type ValidMessage = {
 		content: string;
 		sender: string;
 		date: Date
 	};
+
+	type Message = ValidMessage | { error: string }
 
 
 	const submittedMessages: (Message | boolean)[] = $state([]);
@@ -24,6 +26,7 @@
 		errorMsg = '';
 
 		if (!messageContent.trim()) {
+			submittedMessages.unshift({error: 'Message cannot be empty!'})
 			errorMsg = 'Message cannot be empty!';
 			return;
 		}
@@ -33,6 +36,7 @@
 		])
 
 		if (error) {
+			submittedMessages.unshift({error: error.message})
 			errorMsg = `Error: ${error.message}`
 		} else {
 			submittedMessages.unshift({content: messageContent, sender: messageSender, date: new Date()});
@@ -43,22 +47,29 @@
 </script>
 
 <div class="flex h-full  flex-col items-center p-2 sm:p-6 font-sans">
+
 	<div
-		class="font-receipt-xl mt-8 mb-14 flex -rotate-3 flex-col items-center bg-white p-6 text-gray-800 drop-shadow-md"
+		class="font-receipt-xl my-8 flex -rotate-3 flex-col items-center bg-white p-6 text-gray-800 drop-shadow-md"
 	>
 		<h1 class="pb-2 text-3xl">paper.pagani.io</h1>
 		<p class="">A silly “fax machine” just for me</p>
 	</div>
 
-	<p class="pt-4 pb-8">
-		If you send me a message it will appear in my house. So be nice.<br />Also, paper costs money
-		so keep it short, thanks.
-	</p>
+	<section class="max-w-98 my-8 p-4 border-l-3 border-amber-500 pl-3 leading-[1.3] bg-amber-50 text-amber-950 z-10">
+		<p>
+			I bought a receipt printer. You can send me messages and I'll print them out and put them on my wall. It's a bit like a fax machine, but slower and more expensive.
+		</p>
+		<p class="pt-1 relative">
+			All the parts of this project are on 
+			<a href="https://github.com/paganinetwork/paper" class="z-20 relative after:content-[''] after:bg-amber-200 after:w-full after:h-2 after:absolute after:bottom-0 after:left-0 after:-z-10 hover:after:bg-amber-400">GitHub</a>.
+		</p>
+
+	</section>
+
 	<form
 		onsubmit={submitMessage}
-		class="w-full max-w-xl rounded-lg border-6 border-slate-800 bg-slate-900 p-10 text-slate-100 "
+		class="w-full max-w-xl rounded-lg border-6 border-slate-800 bg-slate-900 p-10 text-slate-100 shadow-md"
 	>
-		<p>{errorMsg}</p>
 		<div class="w-full pb-6">
 			<label
 				class="block pb-2 text-sm font-semibold after:text-red-600 after:content-['*']"
@@ -87,7 +98,7 @@
 
 			<button
 				type="submit"
-				class="xs:w-auto w-full self-end rounded-lg bg-slate-600 text-slate-100 border-0 border-slate-700 hover:bg-slate-800 p-3 font-semibold shadow-md shadow-slate-950"
+				class="xs:w-auto w-full self-end rounded-lg bg-slate-600 text-slate-100 border-0 border-slate-700 cursor-pointer hover:bg-slate-800 p-3 font-semibold shadow-md shadow-slate-950"
 			>
 				Print Message
 			</button>
@@ -99,15 +110,15 @@
 				class=" -ml-10 flex sm:flex-col  self-start items-center justify-center gap-2 rounded-r-xl border-2 border-l-0 border-gray-900 bg-black p-4 font-semibold text-xs"
 			>
 				<div
-					class="flex h-4 w-4 items-center justify-center rounded-full bg-blue-900 text-white"
+					class="flex h-4 w-4 items-center justify-center rounded-full bg-blue-900"
 				></div>
 				<p>POWER</p>
 				<div
-					class="flex h-4 w-4 items-center justify-center rounded-full {errorMsg ? 'bg-red-800' : 'bg-gray-900'} text-white"
+					class="flex h-4 w-4 items-center justify-center rounded-full {errorMsg ? 'bg-red-800' : 'bg-gray-900'} "
 				></div>
 				<p>ERROR</p>
 				<div
-					class="flex h-4 w-4 items-center justify-center rounded-full bg-green-900 text-white"
+					class="flex h-4 w-4 items-center justify-center rounded-full bg-green-900 "
 				></div>
 				<p>PAPER</p>
 				<button
