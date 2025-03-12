@@ -5,7 +5,7 @@ class SupabaseClient {
     this.supabase = createClient(supabaseUrl, supabaseServiceRoleKey)
   }
 
-  async queryData() {
+  async getQueuedMessages() {
     const { data, error } = await this.supabase.from('messages').select('*').eq('status', 'pending')
     if (error) {
       console.error('Error querying data:', error)
@@ -19,7 +19,7 @@ class SupabaseClient {
   }
 
   async markPrinted(message_id) {
-    return await supabase.from('messages').update({ status: 'printed' }).eq('id', message_id).execute()
+    return this.supabase.from('messages').update({ status: 'printed' }).eq('id', message_id)
   }
 }
 
