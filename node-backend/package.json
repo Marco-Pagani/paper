@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node src/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,9 @@
   "dependencies": {
     "@point-of-sale/receipt-printer-encoder": "^3.0.2",
     "@point-of-sale/system-receipt-printer": "^2.0.1",
-    "canvas": "^3.1.0"
+    "@supabase/supabase-js": "^2.49.1",
+    "canvas": "^3.1.0",
+    "dotenv": "^16.4.7",
+    "usb": "^2.15.0"
   }
 }
