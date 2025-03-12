@@ -81,7 +81,7 @@
 				bind:value={messageContent}
 				id="message-input"
 				class="h-24 w-full resize-none rounded-lg bg-slate-800 border-none shadow-md shadow-slate-950"
-				maxlength="144"
+				maxlength="300"
 				required
 			></textarea>
 		</div>
@@ -89,7 +89,7 @@
 			<div class="xs:w-auto w-full self-start">
 				<label class="block pb-2 text-sm font-semibold" for="sender-input"> Who sent it? </label>
 				<input
-				maxlength="12"
+				maxlength="40"
 					bind:value={messageSender}
 					class="xs:w-auto w-full rounded-lg bg-slate-800 h-12 border-none shadow-md shadow-slate-950"
 					id="sender-input"
