@@ -17,6 +17,12 @@ class Printer {
     if (printer) {
       printer.open()
       const printerIface = printer.interfaces[0]
+
+      if (printerIface.isKernelDriverActive()) {
+        driverAttached = true
+        printerIface.detachKernelDriver()
+      }
+
       printerIface.claim()
       const endpoint = printerIface.endpoint(PRINTER_ENDPOINT)
 
@@ -107,7 +113,6 @@ class Printer {
           console.error('Error sending data:', error)
           reject(error)
         } else {
-          console.log('Data sent!')
           resolve()
         }
       })
