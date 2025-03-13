@@ -18,10 +18,7 @@ class Printer {
       printer.open()
       const printerIface = printer.interfaces[0]
 
-      if (printerIface.isKernelDriverActive()) {
-        driverAttached = true
-        printerIface.detachKernelDriver()
-      }
+      if (printerIface.isKernelDriverActive()) printerIface.detachKernelDriver()
 
       printerIface.claim()
       const endpoint = printerIface.endpoint(PRINTER_ENDPOINT)
