@@ -61,7 +61,7 @@
 		</p>
 		<p class="pt-1 relative">
 			All the parts of this project are on 
-			<a href="https://github.com/paganinetwork/paper" class="z-20 relative after:content-[''] after:bg-amber-200 after:w-full after:h-2 after:absolute after:bottom-0 after:left-0 after:-z-10 hover:after:bg-amber-400">GitHub</a>.
+			<a href="https://github.com/Marco-Pagani/paper" class="z-20 relative after:content-[''] after:bg-amber-200 after:w-full after:h-2 after:absolute after:bottom-0 after:left-0 after:-z-10 hover:after:bg-amber-400">GitHub</a>.
 		</p>
 
 	</section>
